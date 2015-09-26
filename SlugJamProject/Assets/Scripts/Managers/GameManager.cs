@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 /// <summary>
 /// Modified from GameManager.cs from Corgi Engine.
-/// The game manager is a persistent singleton that handles points and time and world orientation
+/// The game manager is a persistent singleton that handles points and game state
 /// </summary>
 public class GameManager : PersistentSingleton<GameManager>
 {

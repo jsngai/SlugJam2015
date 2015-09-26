@@ -54,7 +54,7 @@ public class InputManager : PersistentSingleton<InputManager>
 		inputListener = listener;
 	}
 
-	/// Interface that translates commands into actions
+	/// Interface between input commands and actions.
 	public interface InputListener
 	{
 		// when SPACE action is pressed
