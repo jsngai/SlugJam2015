@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
+using System.Text.RegularExpressions;
 using System.Collections;
 
 public class MainController : Controller, InputManager.InputListener
 {
 	public TypeWriter Writer;
 
-	public string[] Phrases = new string[]
+	public Phrase[] Phrases = new Phrase[] 
 	{
-		"Theonewhoknocks"
 	};
 
 	private Coroutine mainCoroutine;
@@ -58,11 +58,22 @@ public class MainController : Controller, InputManager.InputListener
 			Writer.SetPauseDuration (1f);
 
 			int phraseIndex = Random.Range (0, Phrases.Length);
-			string phraseMessage = Phrases [phraseIndex];
-			Writer.WriteText (phraseMessage);
+			Phrase randomPhrase = Phrases[phraseIndex];
+			string rawMessage = Regex.Replace(randomPhrase.correctMessage, @"\s+", "");
+			//Debug.Log (rawMessage + " | " + randomPhrase.correctMessage);
+			string correctMessage = randomPhrase.correctMessage;
+			Writer.WriteText (rawMessage);
 
 			while(Writer.isWriting)
 			{
+				string writtenText = Writer.GetWrittenText();
+				if(writtenText != correctMessage.Substring(0, Mathf.Min(correctMessage.Length, writtenText.Length)))
+				{
+					Debug.Log ("Wrong");
+					Writer.StopWriting();
+					break;
+				}
+
 				yield return null;
 			}
 

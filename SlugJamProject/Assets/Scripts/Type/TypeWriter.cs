@@ -40,6 +40,17 @@ public class TypeWriter : MonoBehaviour
 		typeCoroutine = StartCoroutine (WriteTextCoroutine ());
 	}
 
+	public void StopWriting()
+	{
+		if (typeCoroutine != null)
+			StopCoroutine (typeCoroutine);
+	}
+
+	public string GetWrittenText() 
+	{
+		return TypeText.text;
+	}
+
 	public void AddSpace() 
 	{
 		TypeText.text += " ";
