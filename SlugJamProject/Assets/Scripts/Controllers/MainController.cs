@@ -6,9 +6,7 @@ public class MainController : Controller, InputManager.InputListener
 {
 	public TypeWriter Writer;
 
-	public Phrase[] Phrases = new Phrase[] 
-	{
-	};
+	public Phrase[] Phrases = new Phrase[] {};
 
 	private Coroutine mainCoroutine;
 
@@ -40,6 +38,7 @@ public class MainController : Controller, InputManager.InputListener
 
 		Writer.SetPauseDuration (0.05f);
 
+		// intro message
 		Writer.WriteText("Hello.");
 
 		yield return new WaitForSeconds(3f);
@@ -47,6 +46,7 @@ public class MainController : Controller, InputManager.InputListener
 		Writer.WriteText ("Press SPACE to fill in the gaps");
 
 		while (true) {
+			// countdown
 			yield return new WaitForSeconds (4f);
 			Writer.WriteTextInstant ("3");
 			yield return new WaitForSeconds (1f);
@@ -57,13 +57,17 @@ public class MainController : Controller, InputManager.InputListener
 
 			Writer.SetPauseDuration (1f);
 
+			// get a random phrase and generate a raw message from the phrase
 			int phraseIndex = Random.Range (0, Phrases.Length);
 			Phrase randomPhrase = Phrases[phraseIndex];
 			string rawMessage = Regex.Replace(randomPhrase.correctMessage, @"\s+", "");
 			//Debug.Log (rawMessage + " | " + randomPhrase.correctMessage);
 			string correctMessage = randomPhrase.correctMessage;
+
+			// start writing raw message
 			Writer.WriteText (rawMessage);
 
+			// here we check the written message against the correct message
 			while(Writer.isWriting)
 			{
 				string writtenText = Writer.GetWrittenText();

@@ -74,7 +74,7 @@ public class TypeWriter : MonoBehaviour
 			TypeText.text += letter;
 
 			if (TypeSound != null)
-				GetComponent<AudioSource>().PlayOneShot (TypeSound);
+				SoundManager.Instance.PlaySound(TypeSound, transform.position);
 
 			yield return new WaitForSeconds (typePauseDuration);
 		}
